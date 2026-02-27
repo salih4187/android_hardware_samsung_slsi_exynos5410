@@ -191,6 +191,7 @@ typedef struct IMG_gralloc_module_public_t
 	/*S.LSI*/
 	int (*FinishPVRRender)(struct IMG_gralloc_module_public_t const *module,
 				buffer_handle_t *buffers, int num_buffers);
+	int ionfd;
 }
 IMG_gralloc_module_public_t;
 

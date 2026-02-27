@@ -259,8 +259,8 @@ void TrustZoneDevice::notify(
 
     // Notify MobiCore about new data
 
-notification_t notification = { sessionId :
-                                    sessionId, payload : 0
+notification_t notification = { .sessionId =
+                                    sessionId, .payload = 0
                                   };
 
     nq->putNotification(&notification);

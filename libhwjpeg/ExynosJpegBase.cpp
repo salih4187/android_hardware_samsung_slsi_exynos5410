@@ -614,7 +614,7 @@ int ExynosJpegBase::setBuf(struct BUFFER *pstBuf, int *piBuf, int *iSize, int iP
         return ERROR_BUFFER_TOO_SMALL;
 
     for(int i = 0; i < iPlaneNum; i++) {
-        if (piBuf[i] == NULL) {
+        if (piBuf[i] == 0) {
             memset(pstBuf, 0, sizeof(struct BUFFER));
             return ERROR_BUFFR_IS_NULL;
         }

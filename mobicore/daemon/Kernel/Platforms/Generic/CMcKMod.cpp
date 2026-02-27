@@ -66,7 +66,7 @@ mcResult_t CMcKMod::mapWsm(
     }
 
     // mapping response data is in the buffer
-struct mc_ioctl_map mapParams = { len:
+struct mc_ioctl_map mapParams = { .len =
         len
     };
 
@@ -112,7 +112,7 @@ mcResult_t CMcKMod::mapMCI(
 {
     LOG_I("Mapping MCI: len=%d", len);
     // mapping response data is in the buffer
-struct mc_ioctl_map mapParams = { len:
+struct mc_ioctl_map mapParams = { .len =
         len
     };
 
@@ -160,10 +160,10 @@ struct mc_ioctl_map mapParams = { len:
 
 //------------------------------------------------------------------------------
 mcResult_t CMcKMod::mapPersistent(
-    uint32_t    len,
-    uint32_t    *pHandle,
-    addr_t      *pVirtAddr,
-    addr_t      *pPhysAddr)
+    uint32_t __unused   len,
+    uint32_t __unused   *pHandle,
+    addr_t      * __unused pVirtAddr,
+    addr_t      * __unused pPhysAddr)
 {
     // Not currently supported by the driver
     LOG_E("MobiCore Driver does't support persistent buffers");
@@ -217,13 +217,13 @@ int CMcKMod::fcInit(uint32_t nqOffset, uint32_t nqLength, uint32_t mcpOffset,
 
     // Init MC with NQ and MCP buffer addresses
     struct mc_ioctl_init fcInitParams = {
-nq_offset :
+.nq_offset =
         nqOffset,
-nq_length :
+.nq_length =
         nqLength,
-mcp_offset :
+.mcp_offset =
         mcpOffset,
-mcp_length :
+.mcp_length =
         mcpLength
     };
     ret = ioctl(fdKMod, MC_IO_INIT, &fcInitParams);
@@ -245,7 +245,7 @@ int CMcKMod::fcInfo(uint32_t extInfoId, uint32_t *pState, uint32_t *pExtInfo)
     }
 
     // Init MC with NQ and MCP buffer addresses
-struct mc_ioctl_info fcInfoParams = {ext_info_id :
+struct mc_ioctl_info fcInfoParams = {.ext_info_id =
         extInfoId
     };
     ret = ioctl(fdKMod, MC_IO_INFO, &fcInfoParams);
@@ -348,11 +348,11 @@ mcResult_t CMcKMod::registerWsmL2(
     }
 
     struct mc_ioctl_reg_wsm params = {
-buffer :
+.buffer =
         (uint32_t) buffer,
-len :
+.len =
         len,
-pid :
+.pid =
         pid
     };
 
@@ -478,7 +478,7 @@ mcResult_t CMcKMod::findContiguousWsm(uint32_t handle, int fd, addr_t *phys, uin
 
     if (!isOpen()) {
         LOG_E("no connection to kmod");
-        return NULL;
+        return 1;
     }
 
     ret = ioctl(fdKMod, MC_IO_RESOLVE_CONT_WSM, &wsm);
@@ -539,9 +539,9 @@ int CMcKMod::fcExecute(addr_t startAddr, uint32_t areaLength)
 {
     int ret = 0;
     struct mc_ioctl_execute params = {
-phys_start_addr :
+.phys_start_addr =
         (uint32_t)startAddr,
-length :
+.length =
         areaLength
     };
 

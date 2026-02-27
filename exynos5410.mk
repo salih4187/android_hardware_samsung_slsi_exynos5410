@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012 The Android Open Source Project
+# Copyright (C) 2013 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,21 +14,18 @@
 # limitations under the License.
 #
 
-ifeq ($(TARGET_BOARD_PLATFORM), exynos5)
-ifeq ($(TARGET_SLSI_VARIANT), bsp)
-ifeq ($(TARGET_SOC), exynos5410)
+# Video Codecs
+PRODUCT_PACKAGES += \
+	libOMX.Exynos.AVC.Decoder \
+	libOMX.Exynos.AVC.Encoder \
+	libOMX.Exynos.MPEG4.Decoder \
+	libOMX.Exynos.MPEG4.Encoder \
+	libOMX.Exynos.VP8.Decoder \
+	libOMX.Exynos.VP8.Encoder \
+	libOMX.Exynos.WMV.Decoder
 
-exynos5410_dirs := \
-	mobicore \
-	libdisplaymodule \
-	libhwcutilsmodule \
-	libhdmimodule \
-	libhwjpeg \
-	libsecurepath \
-	libvirtualdisplaymodule
-
-include $(call all-named-subdir-makefiles,$(exynos5410_dirs))
-
-endif
-endif
-endif
+# stagefright and device specific modules
+PRODUCT_PACKAGES += \
+	libstagefrighthw \
+	libExynosOMX_Core \
+	libExynosOMX_Resourcemanager

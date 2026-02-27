@@ -114,7 +114,7 @@ void MobiCoreDriverDaemon::run(
 #else
 #warning "MOBICORE_COMPONENT_BUILD_TAG is not defined!"
 #endif
-	LOG_I_RELEASE("Build timestamp is %s %s", __DATE__, __TIME__);
+	// LOG_I_RELEASE("Build timestamp is %s %s", __DATE__, __TIME__);
 
     int i;
 
@@ -168,7 +168,7 @@ void MobiCoreDriverDaemon::run(
 }
 
 //------------------------------------------------------------------------------
-bool MobiCoreDriverDaemon::checkPermission(Connection *connection)
+bool MobiCoreDriverDaemon::checkPermission(Connection *connection __unused)
 {
 #ifdef REGISTRY_CHECK_PERMISSIONS
     struct ucred cred;
@@ -693,7 +693,7 @@ void MobiCoreDriverDaemon::processMapBulkBuf(Connection *connection)
         return;
     }
 
-    uint32_t secureVirtualAdr = NULL;
+    uint32_t secureVirtualAdr = 0;
     uint32_t pAddrL2 = (uint32_t)device->findWsmL2(cmd.handle, connection->socketDescriptor);
 
     if (pAddrL2 == 0) {
@@ -792,7 +792,7 @@ void MobiCoreDriverDaemon::processGetMobiCoreVersion(
 void MobiCoreDriverDaemon::processRegistryReadData(uint32_t commandId, Connection  *connection)
 {
     #define MAX_DATA_SIZE 512
-    mcDrvResponseHeader_t rspRegistry = { responseId : MC_DRV_ERR_INVALID_OPERATION };
+    mcDrvResponseHeader_t rspRegistry = { .responseId = MC_DRV_ERR_INVALID_OPERATION };
     void *buf = alloca(MAX_DATA_SIZE);
     uint32_t len = MAX_DATA_SIZE;
     mcSoAuthTokenCont_t auth;
@@ -836,7 +836,7 @@ void MobiCoreDriverDaemon::processRegistryReadData(uint32_t commandId, Connectio
 //------------------------------------------------------------------------------
 void MobiCoreDriverDaemon::processRegistryWriteData(uint32_t commandId, Connection *connection)
 {
-    mcDrvResponseHeader_t rspRegistry = { responseId : MC_DRV_ERR_INVALID_OPERATION };
+    mcDrvResponseHeader_t rspRegistry = { .responseId = MC_DRV_ERR_INVALID_OPERATION };
     uint32_t soSize;
     void *so;
 
@@ -903,7 +903,7 @@ void MobiCoreDriverDaemon::processRegistryWriteData(uint32_t commandId, Connecti
 //------------------------------------------------------------------------------
 void MobiCoreDriverDaemon::processRegistryDeleteData(uint32_t commandId, Connection *connection)
 {
-    mcDrvResponseHeader_t rspRegistry = { responseId : MC_DRV_ERR_INVALID_OPERATION };
+    mcDrvResponseHeader_t rspRegistry = { .responseId = MC_DRV_ERR_INVALID_OPERATION };
     mcSpid_t spid;
 
     if (!checkPermission(connection)) {
@@ -1068,12 +1068,12 @@ bool MobiCoreDriverDaemon::handleConnection(
  */
 
 void printUsage(
-    int argc,
+    int argc __unused,
     char *args[]
 )
 {
 #ifdef MOBICORE_COMPONENT_BUILD_TAG
-    fprintf(stderr, "MobiCore Driver Daemon %u.%u. \"%s\" %s %s\n", DAEMON_VERSION_MAJOR, DAEMON_VERSION_MINOR, MOBICORE_COMPONENT_BUILD_TAG, __DATE__, __TIME__);
+    // fprintf(stderr, "MobiCore Driver Daemon %u.%u. \"%s\" %s %s\n", DAEMON_VERSION_MAJOR, DAEMON_VERSION_MINOR, MOBICORE_COMPONENT_BUILD_TAG, __DATE__, __TIME__);
 #else
 #warning "MOBICORE_COMPONENT_BUILD_TAG is not defined!"
 #endif
@@ -1164,7 +1164,7 @@ int main(int argc, char *args[])
         // obtain a new process group */
         setsid();
         /* close all descriptors */
-        for (i = getdtablesize(); i >= 0; --i) {
+        for (i = sysconf(_SC_OPEN_MAX); i >= 0; --i) {
             close(i);
         }
         // STDIN, STDOUT and STDERR should all point to /dev/null */
