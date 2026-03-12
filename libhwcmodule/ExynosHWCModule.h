@@ -22,6 +22,8 @@
 #define VSYNC_DEV_MIDDLE "/platform/exynos-sysmmu.11"
 #define VSYNC_DEV_NAME  "/exynos5-fb.1/vsync"
 
+#define HWC_VERSION HWC_DEVICE_API_VERSION_1_5
+
 #define DUAL_VIDEO_OVERLAY_SUPPORT
 #define EXYNOS_SUPPORT_BGRX_8888
 // #define WAIT_FOR_RENDER_FINISH
