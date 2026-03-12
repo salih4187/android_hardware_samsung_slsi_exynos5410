@@ -79,7 +79,7 @@ struct s3c_fb_win_config {
  * set to the maximum of any version of the hardware can do is safe.
  */
 #define S3C_FB_MAX_WIN	(5)
-#define S3C_WIN_UPDATE_IDX (5)
+#define S3C_WIN_UPDATE_IDX (-1)
 struct s3c_fb_win_config_data {
 	int	fence;
 	struct s3c_fb_win_config config[S3C_FB_MAX_WIN];

@@ -20,12 +20,8 @@ ifeq ($(TARGET_SOC), exynos5410)
 
 exynos5410_dirs := \
 	mobicore \
-	libdisplaymodule \
-	libhwcutilsmodule \
-	libhdmimodule \
 	libhwjpeg \
-	libsecurepath \
-	libvirtualdisplaymodule
+	libsecurepath
 
 include $(call all-named-subdir-makefiles,$(exynos5410_dirs))
 
