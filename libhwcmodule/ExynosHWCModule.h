@@ -18,27 +18,12 @@
 #define ANDROID_EXYNOS_HWC_MODULE_H_
 #include <hardware/hwcomposer.h>
 
-#define VSYNC_DEV_PREFIX "/sys/devices"
-#define VSYNC_DEV_MIDDLE "/platform/exynos-sysmmu.11"
-#define VSYNC_DEV_NAME  "/exynos5-fb.1/vsync"
-
-#define HWC_VERSION HWC_DEVICE_API_VERSION_1_5
+#define VSYNC_DEV_PREFIX ""
+#define VSYNC_DEV_MIDDLE ""
+#define VSYNC_DEV_NAME  "/sys/devices/platform/exynos-sysmmu.11/exynos5-fb.1/vsync"
 
 #define DUAL_VIDEO_OVERLAY_SUPPORT
 #define EXYNOS_SUPPORT_BGRX_8888
-// #define WAIT_FOR_RENDER_FINISH
-
-#ifdef WAIT_FOR_RENDER_FINISH
-inline int ExynosWaitForRenderFinish(const private_module_t  *gralloc_module,
-                                                        buffer_handle_t *handle, int num_buffers)
-{
-    if (gralloc_module) {
-        if (gralloc_module->FinishPVRRender(gralloc_module, handle, num_buffers) < 0)
-            return -1;
-    }
-    return 0;
-}
-#endif
 
 const size_t GSC_DST_W_ALIGNMENT_RGB888 = 16;
 const size_t GSC_DST_CROP_W_ALIGNMENT_RGB888 = 1;
@@ -54,10 +39,7 @@ const size_t WFD_GSC_IDX = 3;
 const size_t WFD_GSC_DRM_IDX = 3;
 #endif
 const int FIMD_GSC_USAGE_IDX[] = {FIMD_GSC_IDX, FIMD_GSC_SEC_IDX};
-#ifdef USES_VIRTUAL_DISPLAY
-const int AVAILABLE_GSC_UNITS[] = { 0, 1, 1, 1 };
-#else
-const int AVAILABLE_GSC_UNITS[] = { 0, 1, 1, 5 };
+const int AVAILABLE_GSC_UNITS[] = { 0, 3, 3, 3 };
 #endif
 
 #endif
